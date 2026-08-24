@@ -1,9 +1,11 @@
 <?php
 
 function redirect($path){
-    header("Location: $path");
-    exit();
-}
 
+    header("Location: $path");
+
+    exit();
+
+}
 
 ?>

@@ -1,14 +1,16 @@
 <?php
 
 require_once'config/config.php';
-require_once'includes.activity-logger.php';
+require_once'includes/activity-logger.php';
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $action = trim($_POST['action'] ?? '');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? '';
 
-    $user_id = $_SESSION['user_id'] ?? null;
+    echo "<script>alert('Database action successful!');</script>";
 }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,11 +22,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <body>
 
 <form method="POST">
-    <button
-    type="submit"
-    name="action" 
-    >sample/button>
-    </form>
+   <button type="submit" name="action" value="sample">
+    sample
+</button>
 
 </body>
 </html>
