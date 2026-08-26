@@ -1,30 +1,73 @@
 <?php
 
-require_once'config/config.php';
-require_once'includes/activity-logger.php';
+require_once('config/config.php');
+require_once('includes/activity-logger.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
+$user_id = "root" ?? null;
+$user_email = "root" ?? null;
 
-    echo "<script>alert('Database action successful!');</script>";
-}
+$buttons = [
+    'Login',
+    'Log out',
+    'Create Record',
+    'Update Record',
+    'Delete Record',
+    'View Record',
+    'Upload File',
+    'Download File',
+    'Search',
+    'Generate Report'
+];
 
 ?>
 
+<table border="1" cellpadding="10" style="border-collapse: collapse;">
+    <tr>
+        <th>Action</th>
+        <th>Test</th>
+    </tr>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <?php foreach ($buttons as $button): ?>
+        <tr>
 
-<form method="POST">
-   <button type="submit" name="action" value="sample">
-    sample
-</button>
+            <td><?= htmlspecialchars($button) ?></td>
+        <td>
 
-</body>
-</html>
+            <form method="post">
+                <input type="hidden" name="action"
+                    value="<?= htmlspecialchars($button) ?>"
+                >
+                <button type="submit">Test</button>
+            </form>
+
+        </td>
+    </tr>
+ <?php endforeach; ?>
+
+</table>
+
+<?php
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $action = $_POST['action'] ?? "test_activity";
+
+    $status = random_int(0, 1) === 1? 'success' : 'failed';
+
+    $success = logActivity(
+        $pdo,
+        $user_id,
+        $user_email,
+        $action,
+        $status
+    );
+
+    if($success) {
+        echo "<p>Activity: " . htmlspecialchars($action) . 
+        " Status: " . htmlspecialchars($status) .
+        "Log inserted successfully </p>";
+    } else {
+        echo "<p>Failed to log activity.</p>";
+    }
+
+}
+?>
