@@ -2,20 +2,21 @@
 
 function redirect($path){
 
-    header("Location: $path");
+    header("Location: " . BASE_URL . $path);
 
-    exit();
+    exit;
 
 }
 
-function loginUser ($pdo,$login,$password){
+function loginUser($pdo,$login,$password){
     #QUERY 2
     $sql = "
         SELECT
             user_id,
             user_email,
+            user_username,
             user_password,
-            user_role,
+            user_role
         
         FROM users
         WHERE user_email = :login
@@ -25,7 +26,7 @@ function loginUser ($pdo,$login,$password){
     ";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->execute(['login' => $login]);
+    $stmt->execute([':login' => $login]);
 
     $user = $stmt->fetch();
 
