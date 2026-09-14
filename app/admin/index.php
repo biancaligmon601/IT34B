@@ -60,4 +60,8 @@ $activities = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tbody>
     </table>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/3.0.4/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/3.0.4/js/dataTables.bootstrap5.min.js"></script>
 </html>
