@@ -6,22 +6,31 @@ if(isset($_SESSION['user_id'])) {
     header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
     exit();
 }
+
 $error='';
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login = $_POST['login'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    if(loginUser($pdo,$login,$password)){
-        echo 'location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php';
-        header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
-        exit;
-   
-    }
-
     $error = 'Invalid login credentials. Please try again.';
 
+    if ($login=== '' || $password === '') {
+        // Log incomplete login attempt
+        logActivity($pdo,null,$login,'login','failed');
+
+    }else{
+        
+
+         if(loginUser($pdo,$login,$password)){
+            logActivity($pdo,$_SESSION['user_id'],$_SESSION['user_email'],'login','success');
+            echo 'location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php';
+            header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
+            exit;
+        }
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
